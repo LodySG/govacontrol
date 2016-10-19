@@ -2,3 +2,9 @@ body {
     background-color: darkslategrey;
     color: white;
 }
+
+#tilt
+{
+    height: 10vh;
+    width: 10vh;
+}

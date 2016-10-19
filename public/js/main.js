@@ -1,26 +1,27 @@
 $(function() {
     nx.colorize(nx.randomColor());
-    vitesse.mode = "relative";
-    vitesse.on('*', function(data) {
-        var speed = nx.scale(data.value, 0, 1, -255, 255);
-        console.log(speed);
+
+    tilt.active = false;
+
+    tilt.on('*', function(data) {
+        $("#status").html("x: "+data.x+" y: "+data.y);
+        //console.log(data);
     });
-    camembert.on('*', function(data) {
-        console.log(data);
+    rouegauche.on('*', function(data) {
+        var res = data.value * 255;
+        console.log(res);
     });
-    kb.on('*', function(data) {
-        console.log(data);
+    rouedroite.on('*', function(data) {
+        var res = data.value * 255;
+        console.log(res);
     });
-    porte.on('*', function(data) {
-        console.log(data);
-    });
-    position.on('*', function(data) {
-        if (porte.val.value == 1) {
-            vitesse.set({ value: data.y });
-            camembert.set({ value: data.x });
+    send_command.on('press', function(data) {
+        if(data == 1)
+        {
+            tilt.set({x: 0, y: 0, z: 0});
+            tilt.active = true;
         }
-    });
-    button.on('press', function(data) {
-        console.log(data);
+        else
+            tilt.active = false;
     });
 });

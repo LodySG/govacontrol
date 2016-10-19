@@ -5,18 +5,20 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Nexus Control</title>
+    <title>Gova Control</title>
     <link rel="stylesheet" type="" href="/public/css/main.css">
 </head>
 
 <body>
-    <h1>Nexus Control</h1>
-    <canvas nx="dial" id="camembert"></canvas>
-    <canvas nx="slider" id="vitesse" min="-255" max="255" label="Mod Depth"></canvas>
-    <canvas nx="keyboard" id="kb"></canvas>
-    <canvas nx="toggle" id="porte"></canvas>
-    <canvas nx="position" id="position"></canvas>
-    <canvas nx="button" id="button"></canvas>
+    <h1>Gova Control</h1>
+
+    <canvas nx="tilt" id="tilt"></canvas>
+    <canvas nx="crossfade" id="rouegauche"></canvas>
+    <canvas nx="crossfade" id="rouedroite"></canvas>
+    <canvas nx="button" id="send_command"></canvas>
+
+    <div id="status"></div>
+
     <script src="\node_modules\jquery\dist\jquery.min.js"></script>
     <script src="\node_modules\nexusui\dist\nexusUI.min.js"></script>
     <script src="\public\js\main.js"></script>
