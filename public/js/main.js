@@ -22,6 +22,10 @@ $(function() {
         $("#initial").html("initial x: "+initialX+" y: "+initialY);
         $("#scale").html("scale : "+scale);
         $("#speed").html("speed: "+speed);
+
+        rouegauche.set({value: speed/255});
+        rouedroite.set({value: speed/255});
+
         //console.log(data);
     });
     rouegauche.on('*', function(data) {
