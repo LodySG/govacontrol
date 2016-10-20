@@ -14,7 +14,9 @@ $(function() {
         var y = data.y;
         //var speed = nx.scale(y,y-(0.100),y-(0.100),-255,255);
         var scale = initialY - y;
-        var speed = nx.scale(scale,initialY-(0.100),initialY+(0.100),-255,255);
+        var speed_tmp = nx.scale(scale,-0.3,0.3,-255,255);
+        var speed_clip = nx.clip(speed_tmp,-255,255 );
+        var speed = nx.prune(speed_clip,0);
 
         $("#status").html("current x: "+data.x+" y: "+data.y);
         $("#initial").html("initial x: "+initialX+" y: "+initialY);
