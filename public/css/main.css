@@ -1,10 +1,21 @@
 body {
-    background-color: darkslategrey;
+    background-color: #2185D5;
     color: white;
 }
 
-#tilt
+#mouvement
 {
-    height: 10vh;
-    width: 10vh;
+    height: 20vh;
+    width: 20vh;
+}
+
+#command
+{
+    height: 20vh;
+    width: 20vh;
+    /*
+    position: absolute;
+    bottom: 6vh;
+    right: 6vh;
+    */
 }

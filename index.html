@@ -6,20 +6,42 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Gova Control</title>
+    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" type="" href="\public\css\main.css">
 </head>
 
 <body>
-    <h1>Gova Control</h1>
-
-    <canvas nx="tilt" id="tilt"></canvas>
-    <canvas nx="crossfade" id="rouegauche"></canvas>
-    <canvas nx="crossfade" id="rouedroite"></canvas>
-    <canvas nx="button" id="send_command"></canvas>
-
-    <div id="status"></div>
+    
+    <div class="container-fluid">
+        <h1>Gova Control</h1>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <canvas nx="tilt" id="mouvement"></canvas>
+            </div>            
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <canvas nx="crossfade" id="rouegauche"></canvas>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <canvas nx="crossfade" id="rouedroite"></canvas>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <canvas nx="button" id="command"></canvas>  
+            </div>
+        </div>
+        <div id="status"></div>
+        <div id="initial"></div>
+        <div id="scale"></div>
+        <div id="speed"></div>
+    </div>
 
     <script src="\node_modules\jquery\dist\jquery.min.js"></script>
+    <script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="\node_modules\nexusui\dist\nexusUI.min.js"></script>
     <script src="\public\js\main.js"></script>
 </body>
