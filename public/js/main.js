@@ -23,20 +23,10 @@ $(function() {
         $("#scale").html("scale : "+scale);
         $("#speed").html("speed: "+speed);
 
-        rouegauche.set({value: speed/255});
-        rouedroite.set({value: speed/255});
-
         //console.log(data);
     });
-    rouegauche.on('*', function(data) {
-        var res = data.value * 255;
-        console.log(res);
-    });
-    rouedroite.on('*', function(data) {
-        var res = data.value * 255;
-        console.log(res);
-    });
-    command.on('press', function(data) {
+    
+    var command = function(data) {
         if(data == 1)
         {
             if(initialX == undefined){
@@ -51,5 +41,11 @@ $(function() {
             initialX = undefined;
             initialY = undefined;
         }
-    });
+    };
+
+    forward.on('press', command);
+
+    backward.on('press', command);
+
+    $('.spinner').hide();
 });
