@@ -6,7 +6,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Gova Control</title>
-    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" type="" href="\public\css\main.css">
 </head>
 
@@ -15,48 +14,24 @@
         <div class="dot1"></div>
         <div class="dot2"></div>
     </div>
-    <div class="container-fluid">
-        <div id="pad">
-            <h1>Gova Control</h1>
-            <div class="row">
-                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                    <canvas nx="tilt" id="mouvement"></canvas>
-                </div>
-                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                            <div id="status"></div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                            <div id="initial"></div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                            <div id="scale"></div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                            <div id="speed"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-                    <canvas class="btn" nx="button" id="backward"></canvas>
-                </div>
-                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-                    <canvas class="btn" nx="button" id="forward"></canvas>
-                </div>   
-            </div>
-        </div>
+    <div id="pad">
+        <h1>Gova Control</h1>
+        <div id="alpha"></div>
+        <div id="beta"></div>
+        <div id="gamma"></div>
+        <div id="speed"></div>
+        <div id="virage"></div>
+        <!--<div id="scalebeta"></div>
+        <div id="scalegamma"></div>-->
+        <div id="left"></div>
+        <div id="right"></div>
+        <div id="initial"></div>
+        <div id="speed"></div>
+        <canvas nx="button" id="move"></canvas>
     </div>
-
     <script src="\node_modules\jquery\dist\jquery.min.js"></script>
-    <script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="\node_modules\nexusui\dist\nexusUI.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
     <script src="\public\js\main.js"></script>
 </body>
 

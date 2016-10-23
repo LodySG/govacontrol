@@ -3,21 +3,12 @@ body {
     color: white;
 }
 
-#mouvement
-{
-    height: 20vw;
-    width: 20vw;
-}
-
-.btn
-{
-    height: 20vw;
-    width: 20vw;
-    /*
-    position: absolute;
-    bottom: 6vh;
-    right: 6vh;
-    */
+#move {
+  height: 40%;
+  width: 40%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
 }
 
 .spinner {
