@@ -21,8 +21,7 @@ app.get('/', function (req, res) {
 
 io.on('connection', function(socket){
   socket.on('speed', function(speed){
-    console.log('speed left: ' + speed.left+', right: '+speed.right);
-    robot.setSpeed(speed.left,speed.right);
+    robot.setSpeed(speed);
   });
 });
 

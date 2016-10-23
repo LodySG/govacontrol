@@ -7,7 +7,7 @@ var robot = module.exports = Cylon.robot({
   speedR: 0,
 
   connections: {
-    arduino: { adaptor: 'firmata', port: '/dev/tty.usbmodem1411' }
+    arduino: { adaptor: 'firmata', port: '/dev/ttyACM0' }
   },
 
   devices: {
@@ -24,17 +24,40 @@ var robot = module.exports = Cylon.robot({
     my.motorRightForward.speed(0);
 
     every(500, function(){
-      console.log("move");
+      my.move();
     });
   },
 
-  setSpeed: function(left,right)
+  setSpeed: function(obj)
   { 
-    this.speedL = left;
-    this.speedR = right;
+    this.speedL = obj.left;
+    this.speedR = obj.right;
   },
 
   move: function(){
+    console.log('speed left: ' + this.speedL +', right: '+ this.speedR);
+
+    if(this.speedL > 0) {
+      this.motorLeftReverse.speed(0);
+      this.motorLeftForward.speed(this.speedL);
+    } else if( this.speedL < 0 ) {
+      this.motorLeftReverse.speed(Math.abs(this.speedL));
+      this.motorLeftForward.speed(0);
+    } else {
+      this.motorLeftReverse.speed(0);
+      this.motorLeftForward.speed(0);
+    }
+
+    if(this.speedR > 0) {
+      this.motorRightReverse.speed(0);
+      this.motorRightForward.speed(this.speedR);
+    } else if( this.speedR < 0 ) {
+      this.motorRightReverse.speed(Math.abs(this.speedR));
+      this.motorRightForward.speed(0);
+    } else {
+      this.motorRightReverse.speed(0);
+      this.motorRightForward.speed(0);
+    }
 
   }
 });
