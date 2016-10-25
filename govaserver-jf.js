@@ -6,7 +6,7 @@ var io = require('socket.io')(server);
 var request = require('request');
 var last_action_date = Date.now();
 var isControlled = false;
-var robot = require("./robot.js");
+var robot = require("./robot-jf.js");
 
 console.log(robot);
 
@@ -19,21 +19,12 @@ app.get('/', function(req, res) {
     res.render(__dirname + '/index.html');
 });
 
-io.on('connection', function(socket) {
-    socket.on('speed', function(speed) {
-        robot.setSpeed(speed);
+robot.on("ready", function() {
+    io.on('connection', function(socket) {
+        socket.on('speed', function(speed) {
+            robot.move(speed);
+        });
     });
 });
 
-/*
-setInterval(function(){
-    var n = Date.now();
-    //console.log(last_action_date);
-    if(((n - last_action_date) > 300) && true){
-        
-    }
-},1000);
-*/
-
-robot.start();
 server.listen(port, () => console.log("app launched -> localhost:" + port));
