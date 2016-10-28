@@ -15,16 +15,17 @@ var port = 5360;
 app.engine('html', require('ejs').renderFile);
 app.use(express.static(__dirname));
 
-app.get('/', function (req, res) {
-  res.render(__dirname + '/index.html');
+app.get('/', function(req, res) {
+    res.render(__dirname + '/index.html');
 });
 
-io.on('connection', function(socket){
-  socket.on('speed', function(speed){
-    robot.setSpeed(speed);
-  });
+io.on('connection', function(socket) {
+    socket.on('speed', function(speed) {
+        robot.setSpeed(speed);
+    });
 });
 
+/*
 setInterval(function(){
     var n = Date.now();
     //console.log(last_action_date);
@@ -32,6 +33,7 @@ setInterval(function(){
         
     }
 },1000);
+*/
 
 robot.start();
-server.listen(port, () => console.log("app launched -> localhost:"+port));
+server.listen(port, () => console.log("app launched -> localhost:" + port));

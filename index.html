@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="public/favicon.ico" type="image/x-icon">
     <title>Gova Control</title>
     <link rel="stylesheet" type="" href="\public\css\main.css">
 </head>
@@ -14,19 +15,17 @@
         <div class="dot1"></div>
         <div class="dot2"></div>
     </div>
+    <div id="message"></div>
     <div id="pad">
         <h1>Gova Control</h1>
-        <div id="alpha"></div>
-        <div id="beta"></div>
-        <div id="gamma"></div>
+        <div id="inclinaison"></div>
+        <div id="clavier"></div>
         <div id="speed"></div>
         <div id="virage"></div>
-        <!--<div id="scalebeta"></div>
-        <div id="scalegamma"></div>-->
         <div id="left"></div>
         <div id="right"></div>
         <div id="initial"></div>
-        <div id="speed"></div>
+        <canvas nx="slider" id="desktopSpeed"></canvas>
         <canvas nx="button" id="move"></canvas>
     </div>
     <script src="\node_modules\jquery\dist\jquery.min.js"></script>
