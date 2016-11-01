@@ -1,9 +1,8 @@
 $(function() {
 
     function is_touch_device() {
-        return 'ontouchstart' in window        // works on most browsers 
-            || navigator.maxTouchPoints;       // works on IE10/11 and Surface
-    };
+        return 'ontouchstart' in window  || navigator.maxTouchPoints;
+    }
 
     switch(window.orientation)
     {
@@ -26,91 +25,45 @@ $(function() {
     var haut = "ArrowUp";
     var bas = "ArrowDown";
     var vitesseMax = 255;
-    var amplitudeVirage = 15;
     var amplitudeSpeed = 30;
     var stepJaugeSpeed = 0.10;
-
-    var initialAlpha = undefined;
-    var initialBeta = undefined;
-    var initialGamma = undefined;
-
-    var currentBeta = undefined;
-    var currentGamma = undefined;
-    var currentAlpha = undefined;
-
-    var desktopSpeedLeft = 0;
-    var desktopSpeedRight = 0;
+    var minGamma = -85;
+    var maxGamma = -50;
 
     var socket = io();
 
     var left = 0;
     var right = 0;
 
-    var getMove = function(event) {
-        currentAlpha = nx.prune(event.originalEvent.alpha, 1);
-        currentBeta = nx.prune(event.originalEvent.beta, 1);
-        currentGamma = nx.prune(event.originalEvent.gamma, 1);
-
-        if (initialAlpha != undefined) {
-            var scaleBeta = initialBeta - currentBeta;
-            var scaleGamma = initialGamma - currentGamma;
-            var virage_tmp = nx.scale(scaleBeta, 0-amplitudeVirage, amplitudeVirage, 0-vitesseMax, vitesseMax);
-            var speed_tmp = nx.scale(scaleGamma, amplitudeSpeed, 0-amplitudeSpeed, 0-vitesseMax, vitesseMax);
-            var speed_clip = nx.clip(speed_tmp, 0-vitesseMax, vitesseMax);
-            var virage_clip = nx.clip(virage_tmp, 0-vitesseMax, vitesseMax);
-            var speed = nx.prune(speed_clip, 0);
-            var virage = nx.prune(virage_clip, 0);
-
-            if ((speed > 0)) {
-                left = virage > 0 ? speed - virage : speed;
-                right = virage < 0 ? speed + virage : speed;
-            } else if (speed < 0) {
-                left = virage > 0 ? speed + virage : speed;
-                right = virage < 0 ? speed - virage : speed;
-            } else {
-                left = 0;
-                right = 0;
-            }
-        } else {
-            left = 0;
-            right = 0;
-        }
-
-        $("#inclinaison").html("alpha : " + currentAlpha + ", beta : " + currentBeta + ", gamma : " + currentGamma);
-        $("#left").html("left : " + nx.prune(left, 1));
-        $("#right").html("right : " + nx.prune(right, 1));
-        $("#speed").html("speed : " + speed);
-        $("#virage").html("virage : " + virage);
-        $("#initial").html("{ " + initialAlpha + " , " + initialBeta + " , " + initialGamma + " }");
-
-        socket.emit('speed', { left: left, right: right });
-    };
-
-    var commandGyro = function(data) {
-        console.log(currentGamma);
-        if (data == 1) {
-            if (initialBeta == undefined) {
-                initialGamma = currentGamma;
-                initialBeta = currentBeta;
-                initialAlpha = currentAlpha;
-            }
-        } else {
-            initialGamma = undefined;
-            initialBeta = undefined;
-            initialAlpha = undefined;
-        }
+    var setSpeed = function(event) {
+        var gamma = event.originalEvent.gamma;
+        $("#gamma").html("gamma : "+gamma);
+        gamma = nx.clip(gamma, minGamma, maxGamma);
+        var speed_tmp = nx.scale(gamma, minGamma, maxGamma, 0, 1);
+        jaugeSpeed.set({value: speed_tmp});
+        var speed = nx.prune(speed_tmp * vitesseMax);
+        var speedLeft = left * speed;
+        var speedRight = right * speed;
+        socket.emit('speed', { left: speedLeft, right: speedRight });
     };
 
     nx.colorize("fill", "#3A4750");
     nx.colorize("border", "#303841");
     nx.colorize("accent", "#F3F3F3");
-    desktopSpeed.hslider = false;
-    desktopSpeed.draw();
+    jaugeSpeed.hslider = false;
+    
+    jaugeSpeed.label = true;
+    leftForward.label = true;
+    leftReverse.label = true;
+    rightForward.label = true;
+    rightReverse.label = true;
+
+    jaugeSpeed.draw();
 
     if(is_touch_device())
     {
         $(window).on("deviceorientation", function(event) {
-            getMove(event);
+            setSpeed(event);
         });
 
         $(window).on("orientationchange", function(event) {
@@ -118,46 +71,65 @@ $(function() {
             location.reload();
         });
 
-        move.on('press', commandGyro);
+        leftForward.on('press', function(data){
+            if(data == 1)
+                left = 1;
+            else
+                left = 0;
+        });
+        leftReverse.on('press', function(data){
+            if(data == 1)
+                left = -1;
+            else
+                left = 0;
+        });
+        rightForward.on('press', function(data){
+            if(data == 1)
+                right = 1;
+            else
+                right = 0;
+        });
+        rightReverse.on('press', function(data){
+            if(data == 1)
+                right = -1;
+            else
+                right = 0;
+        });
 
-        $("#desktopSpeed").hide();
+        $(".desktop").hide();
 
     } else {
-
-        $("#move").hide();
-
+        //$(".mobile").hide();
         $(document).keydown(function(event) {
-            //console.log(event.originalEvent.code);
-            var speed = nx.prune(desktopSpeed.val.value * vitesseMax);
+            var speed = nx.prune(jaugeSpeed.val.value * vitesseMax);
+            var value = jaugeSpeed.val.value;
 
             switch(event.originalEvent.code){
                 case p:
-                    desktopSpeedRight = speed;
+                    right = speed;
                     break;
                 case m:
-                    desktopSpeedRight = 0 - speed;
+                    right = 0 - speed;
                     break;
                 case a:
-                    desktopSpeedLeft = speed;
+                    left = speed;
                     break;
                 case q:
-                    desktopSpeedLeft = 0 - speed;
+                    left = 0 - speed;
                     break;
                 case haut:
-                    var value = desktopSpeed.val.value;
                     value += stepJaugeSpeed;
                     value = nx.clip(value,0,1);
-                    desktopSpeed.set({value: value});
+                    jaugeSpeed.set({value: value});
                     break;
                 case bas:
-                    var value = desktopSpeed.val.value;
                     value -= stepJaugeSpeed;
                     value = nx.clip(value,0,1);
-                    desktopSpeed.set({value: value});
+                    jaugeSpeed.set({value: value});
                     break;
             };
-            socket.emit('speed', { left: desktopSpeedLeft, right: desktopSpeedRight });
-            $("#clavier").html(" speed : {"+desktopSpeedLeft+","+desktopSpeedRight+"}");
+            socket.emit('speed', { left: left, right: right });
+            $("#speed").html(" speed : {"+left+","+right+"}");
             event.preventDefault();
         });
 
@@ -165,15 +137,15 @@ $(function() {
             switch(event.originalEvent.code){
                 case p:
                 case m:
-                    desktopSpeedRight = 0;
+                    right = 0;
                     break;
                 case a:
                 case q:
-                    desktopSpeedLeft = 0;
+                    left = 0;
                     break;
-            };
-            socket.emit('speed', { left: desktopSpeedLeft, right: desktopSpeedRight });
-            $("#clavier").html(" speed : {"+desktopSpeedLeft+","+desktopSpeedRight+"}");
+            }
+            socket.emit('speed', { left: left, right: right });
+            $("#speed").html(" speed : {"+left+","+right+"}");
             event.preventDefault();
         });
     }

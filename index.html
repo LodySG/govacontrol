@@ -9,7 +9,6 @@
     <title>Gova Control</title>
     <link rel="stylesheet" type="" href="\public\css\main.css">
 </head>
-
 <body>
     <div class="spinner">
         <div class="dot1"></div>
@@ -17,16 +16,13 @@
     </div>
     <div id="message"></div>
     <div id="pad">
-        <h1>Gova Control</h1>
-        <div id="inclinaison"></div>
-        <div id="clavier"></div>
+        <canvas class="mobile" nx="button" id="leftForward"></canvas>
+        <canvas class="mobile" nx="button" id="leftReverse"></canvas>
+        <canvas nx="slider" id="jaugeSpeed"></canvas>
         <div id="speed"></div>
-        <div id="virage"></div>
-        <div id="left"></div>
-        <div id="right"></div>
-        <div id="initial"></div>
-        <canvas nx="slider" id="desktopSpeed"></canvas>
-        <canvas nx="button" id="move"></canvas>
+        <div id="gamma"></div>
+        <canvas class="mobile" nx="button" id="rightForward"></canvas>
+        <canvas class="mobile" nx="button" id="rightReverse"></canvas>
     </div>
     <script src="\node_modules\jquery\dist\jquery.min.js"></script>
     <script src="\node_modules\nexusui\dist\nexusUI.min.js"></script>

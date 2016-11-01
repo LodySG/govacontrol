@@ -3,7 +3,7 @@ body {
     color: white;
 }
 
-#move {
+.mobile {
   height: 40%;
   width: 40%;
   position: absolute;
@@ -11,8 +11,38 @@ body {
   top: 50%;
 }
 
-#desktopSpeed {
-  height: 40%;
+#leftForward
+{
+  left: 0;
+  top: 10%;
+}
+
+#leftReverse
+{
+  left: 0;
+  top: 50%;
+}
+
+#rightForward
+{
+  right: 0;
+  top: 10%;
+}
+
+#rightReverse
+{
+  right: 0;
+  top: 50%;
+}
+
+#jaugeSpeed {
+  height: 50vh;
+  width: 50px;
+  margin-left: -25px;
+  margin-top: -25vh; 
+  position: absolute;
+  top: 50%;
+  left: 50%;
 }
 
 .spinner {

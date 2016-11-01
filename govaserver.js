@@ -14,7 +14,7 @@ var board = new five.Board({
     debug: false
 });
 
-var port = 5360;
+var port = 8080;
 
 app.engine('html', require('ejs').renderFile);
 app.use(express.static(__dirname));
