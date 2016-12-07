@@ -3,12 +3,10 @@ body {
     color: white;
 }
 
-.mobile {
-  height: 40%;
-  width: 40%;
+#phare {
   position: absolute;
-  left: 60%;
-  top: 50%;
+  right: 10px;
+  top: 10px;
 }
 
 #leftForward
@@ -37,12 +35,16 @@ body {
 
 #jaugeSpeed {
   height: 50vh;
-  width: 50px;
-  margin-left: -25px;
-  margin-top: -25vh; 
+  width: 50px; 
   position: absolute;
-  top: 50%;
-  left: 50%;
+  bottom: 10px;
+  left: 10px;
+}
+
+#cam {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
 }
 
 .spinner {
@@ -95,4 +97,14 @@ body {
   }
 }
 
-/* Small devices (tablets, 768px and up) */s
+#vid {
+  position: absolute;
+  z-index: -10;
+  height: 100vh;
+  left: 50%;
+  top: 50%;
+  margin-left: -35vw;
+  margin-top: -25vw;
+}
+
+/* Small devices (tablets, 768px and up) */

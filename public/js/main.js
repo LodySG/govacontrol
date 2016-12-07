@@ -19,25 +19,33 @@ $(function() {
     }
 
     var p = "KeyP";
+    var c = "KeyC";
     var m = "Semicolon";
     var a = "KeyQ";
     var q = "KeyA";
+    var l = "KeyL";
+    var o = "KeyO";
     var haut = "ArrowUp";
     var bas = "ArrowDown";
     var vitesseMax = 255;
+    var minAngle = 0;
+    var maxAngle = 180;
     var amplitudeSpeed = 30;
     var stepJaugeSpeed = 0.10;
     var minGamma = -85;
     var maxGamma = -50;
+    var centerY = 0.5;
+    var centerX = 0.5;
 
     var socket = io();
 
     var left = 0;
     var right = 0;
+    var angleUD = 90;
+    var angleLR = 90;
 
     var setSpeed = function(event) {
         var gamma = event.originalEvent.gamma;
-        $("#gamma").html("gamma : "+gamma);
         gamma = nx.clip(gamma, minGamma, maxGamma);
         var speed_tmp = nx.scale(gamma, minGamma, maxGamma, 0, 1);
         jaugeSpeed.set({value: speed_tmp});
@@ -45,6 +53,39 @@ $(function() {
         var speedLeft = left * speed;
         var speedRight = right * speed;
         socket.emit('speed', { left: speedLeft, right: speedRight });
+    };
+
+    var setCam = function(event) {
+        var ud = event.y;
+        var lr = event.x;
+        angleLR = nx.scale(lr, 1, 0, minAngle, maxAngle);
+        angleUD = nx.scale(ud, 1, 0, minAngle, maxAngle);
+        socket.emit('cam', {ud: angleUD, lr: angleLR});
+    };
+
+    var setLum = function(event){
+        //console.log(event.value);
+        socket.emit('lum', {val: event.value});
+    };
+
+    var toggleLum = function(event){   
+        if(phare.val.value == 1){
+            phare.set({value: 0});
+            setLum(phare.val);
+        }
+        else{
+            phare.set({value: 1});
+            setLum(phare.val);
+        }
+    };
+
+    var toggleMouse = function(event){
+        if(vue.val.value == 1){
+            vue.set({value: 0});
+        }
+        else{
+            vue.set({value: 1});
+        }
     };
 
     nx.colorize("fill", "#3A4750");
@@ -60,14 +101,29 @@ $(function() {
 
     jaugeSpeed.draw();
 
+    cam.on('*', function(data){
+        //console.log(data);
+        if(vue.val.value == 1)
+            setCam(data);
+    });
+
+    phare.on('*', function(data){
+        //console.log(data);
+        setLum(data);
+    });
+
     if(is_touch_device())
     {
+        $("#leftForward").addClass("mobile");
+        $("#rightForward").addClass("mobile");
+        $("#leftReverse").addClass("mobile");
+        $("#rightReverse").addClass("mobile");
+        
         $(window).on("deviceorientation", function(event) {
             setSpeed(event);
         });
 
         $(window).on("orientationchange", function(event) {
-            $("#position").html("orientation : "+window.orientation);
             location.reload();
         });
 
@@ -99,7 +155,11 @@ $(function() {
         $(".desktop").hide();
 
     } else {
-        //$(".mobile").hide();
+        $("#leftForward").hide();
+        $("#rightForward").hide();
+        $("#leftReverse").hide();
+        $("#rightReverse").hide();
+        
         $(document).keydown(function(event) {
             var speed = nx.prune(jaugeSpeed.val.value * vitesseMax);
             var value = jaugeSpeed.val.value;
@@ -116,6 +176,16 @@ $(function() {
                     break;
                 case q:
                     left = 0 - speed;
+                    break;
+                case c:
+                    cam.set({x: centerX, y: centerY});
+                    setCam(cam.val);
+                    break;
+                case l:
+                    toggleLum();
+                    break;
+                case o:
+                    toggleMouse();
                     break;
                 case haut:
                     value += stepJaugeSpeed;
