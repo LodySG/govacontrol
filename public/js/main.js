@@ -1,4 +1,6 @@
-$(function() {
+$(function(){
+    
+    function start() {
 
     function is_touch_device() {
         return 'ontouchstart' in window  || navigator.maxTouchPoints;
@@ -225,4 +227,8 @@ $(function() {
     });
 
     $('.spinner').hide();
+};
+
+setTimeout(start, 2000);
+
 });
